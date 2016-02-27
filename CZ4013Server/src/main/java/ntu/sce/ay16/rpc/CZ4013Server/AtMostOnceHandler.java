@@ -28,7 +28,7 @@ public class AtMostOnceHandler implements RequestHandler {
 			return Util.generateError(Util.missingFieldMsg(new String[]{"time"}));
 		}
 		if(!(request.get("time") instanceof Long)){
-			return Util.generateError("Time shall be a type of long.");
+			return Util.generateError(Util.wrongFieldType("time", "long"));
 		}
 		
 		long requestTime = (Long)request.get("time");
