@@ -53,7 +53,8 @@ public class AtMostOnceHandler implements RequestHandler {
 		
 		//Update the cache using the client ip and timestamp
 		this.responseCache.put(key, nextResponse);
-		
+		logger.info("Cache the reply " + nextResponse + " for client " + key);
+
 		logger.exit();
 		return nextResponse;
 	}
