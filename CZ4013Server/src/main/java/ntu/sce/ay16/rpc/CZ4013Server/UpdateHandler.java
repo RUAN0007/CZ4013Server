@@ -21,15 +21,20 @@ public class UpdateHandler implements RequestHandler {
 	static Logger logger = LogManager.getLogger(UpdateHandler.class.getName());    
 	
 	private Map<Path, Set<MonitoringClientInfo>> monitoringInfo = 
-			new HashMap<>();
+			null;
 	
 	
 	private RequestHandler nextRqHdler = null;
+
 	
-	public UpdateHandler(RequestHandler nextRqHdler) {
+
+	public UpdateHandler(Map<Path, Set<MonitoringClientInfo>> monitoringInfo, RequestHandler nextRqHdler) {
 		super();
+		this.monitoringInfo = monitoringInfo;
 		this.nextRqHdler = nextRqHdler;
 	}
+
+
 
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
