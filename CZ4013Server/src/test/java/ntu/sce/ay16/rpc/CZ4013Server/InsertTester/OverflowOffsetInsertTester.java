@@ -58,11 +58,10 @@ public class OverflowOffsetInsertTester {
 
 	@Test
 	public void test() throws Exception {
-
 		Map<String,Object> p = new HashMap<String,Object>();
 		p.put("time",System.currentTimeMillis());
 		p.put("code", 2);
-		p.put("offset", 3);
+		p.put("offset", 13);
 		p.put("path", filePath);
 		p.put("insertion", "zyx");
 		byte[] b = Util.marshal(p);
@@ -84,13 +83,13 @@ public class OverflowOffsetInsertTester {
 		
 		Map<String,Object> response = Util.unmarshal(data);
 		
-		assertTrue((Integer) response.get("status") == 1);
+		assertTrue((Integer) response.get("status") == 0);
 		assertTrue(response.get("message") != null);
 		
 		this.file = Paths.get(filePath).toFile();
 		Scanner fileScanner = new Scanner(file);
 		String content = fileScanner.useDelimiter("\\Z").next();
-		assertTrue(content.equals("abczyxdefghi"));
+		assertTrue(content.equals("abcdefghi"));
 		fileScanner.close();
 	}
 
