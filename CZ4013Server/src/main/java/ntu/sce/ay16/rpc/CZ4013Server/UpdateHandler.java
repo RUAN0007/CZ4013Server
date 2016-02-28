@@ -57,6 +57,7 @@ public class UpdateHandler implements RequestHandler {
 			return Util.generateError(msg);
 		}
 		
+		String file = (String)request.get("path");
 		String content = null;
 		long modificationTime;
 		try {
@@ -66,7 +67,7 @@ public class UpdateHandler implements RequestHandler {
 			modificationTime = reqFile.lastModified();
 			fileScanner.close();
 		} catch (FileNotFoundException e) {
-			String msg = Util.nonExistFileMsg(filePath);
+			String msg = Util.nonExistFileMsg(file);
 			logger.error(msg);
 			return Util.generateError(msg);
 		}
