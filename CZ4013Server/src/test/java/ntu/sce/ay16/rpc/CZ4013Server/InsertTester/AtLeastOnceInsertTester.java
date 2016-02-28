@@ -26,7 +26,7 @@ public class AtLeastOnceInsertTester {
 	private Thread serverThread = null;
 	private File file = null;
 	private String filePath = "test/insert.txt";
-	private int port = 8603;
+	private int port = 8604;
 	String contents = "abcdefghi";
 
 
@@ -36,7 +36,7 @@ public class AtLeastOnceInsertTester {
 
 			@Override
 			public void run() {
-				new Server(port,Server.AT_MOST_ONCE).start();				
+				new Server(port,Server.AT_LEAST_ONCE).start();				
 			}
 		});
 		this.serverThread.start();
@@ -112,7 +112,7 @@ public class AtLeastOnceInsertTester {
 		this.file = Paths.get(filePath).toFile();
 		fileScanner = new Scanner(file);
 		content = fileScanner.useDelimiter("\\Z").next();
-		assertTrue(content.equals("abczyxdefghi"));
+		assertTrue(content.equals("abczyxzyxdefghi"));
 		fileScanner.close();
 	}
 
