@@ -50,12 +50,11 @@ public class AppendNonExistFileTester {
 
 	@Test
 	public void test() throws Exception {
-
+		int cbPort = 9000;
 		Map<String,Object> p = new HashMap<String,Object>();
 		p.put("time",System.currentTimeMillis());
 		p.put("code", 5);
 		p.put("path", filePath);
-		p.put("append", "xyz");
 		byte[] b = Util.marshal(p);
 
 		DatagramSocket dgs = new DatagramSocket();
