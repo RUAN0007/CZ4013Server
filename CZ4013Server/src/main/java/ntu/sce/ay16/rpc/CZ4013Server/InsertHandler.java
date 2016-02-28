@@ -30,10 +30,10 @@ public class InsertHandler implements RequestHandler {
 			missingFields.add("path");
 		}
 		if(request.get("offset") == null){
-			missingFields.add("path");
+			missingFields.add("offset");
 		}
 		if(request.get("insertion") == null){
-			missingFields.add("path");
+			missingFields.add("insertion");
 		}
 		if(missingFields.size() > 0){
 			return Util.errorPacket(Util.missingFieldMsg(missingFields));
