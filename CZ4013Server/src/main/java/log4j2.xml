@@ -9,5 +9,6 @@
     <root level="trace">  
       <appender-ref ref="Console"/>  
     </root>  
+
   </loggers>  
 </configuration> 
