@@ -18,7 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class InsertHandler implements RequestHandler {
-	static Logger logger = LogManager.getLogger(ReadHandler.class.getName());    
+	static Logger logger = LogManager.getLogger(InsertHandler.class.getName());    
 
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
