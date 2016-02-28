@@ -53,7 +53,7 @@ public class Server {
 					msg += " Reason: " + e.getMessage();
 					logger.error(msg);
 
-					Util.sendMsg(clientAddr, clientPort, Util.generateError(msg));
+					Util.sendMsg(clientAddr, clientPort, Util.errorPacket(msg));
 					continue;
 				}
 

@@ -25,10 +25,10 @@ public class AtMostOnceHandler implements RequestHandler {
 		logger.entry();
 				
 		if(request.get("time") == null){
-			return Util.generateError(Util.missingFieldMsg(new String[]{"time"}));
+			return Util.errorPacket(Util.missingFieldMsg(new String[]{"time"}));
 		}
 		if(!(request.get("time") instanceof Long)){
-			return Util.generateError(Util.inconsistentFieldTypeMsg("time", "long"));
+			return Util.errorPacket(Util.inconsistentFieldTypeMsg("time", "long"));
 		}
 		
 		long requestTime = (Long)request.get("time");

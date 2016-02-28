@@ -64,7 +64,7 @@ public class Util {
 		return "Fail to Unmarshal 0x" + DatatypeConverter.printHexBinary(data);
 	}
 	
-	public static Map<String,Object> generateError(String msg){
+	public static Map<String,Object> errorPacket(String msg){
 		Map<String,Object> errorMsg = new HashMap<>();
 		errorMsg.put("status", Integer.valueOf(0));
 		errorMsg.put("message", msg);

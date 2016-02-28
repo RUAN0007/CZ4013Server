@@ -19,25 +19,25 @@ public class ModificationTimeHandler implements RequestHandler {
 
 		//Check for code field
 		if(request.get("code") == null){
-			return Util.generateError(Util.missingFieldMsg(new String[]{"code"}));
+			return Util.errorPacket(Util.missingFieldMsg(new String[]{"code"}));
 		}
 		if(!(request.get("code") instanceof Integer)){
-			return Util.generateError(Util.inconsistentFieldTypeMsg("code", "integer"));
+			return Util.errorPacket(Util.inconsistentFieldTypeMsg("code", "integer"));
 		}
 		int code = (Integer)request.get("code");
 
 		if(code != 0){
 			String msg = Util.inconsistReqCodeMsg("ModificationTime", code);
 			logger.fatal(msg);
-			return Util.generateError(msg);
+			return Util.errorPacket(msg);
 		}
 
 		//Check for path field
 		if(request.get("path") == null){
-			return Util.generateError(Util.missingFieldMsg(new String[]{"path"}));
+			return Util.errorPacket(Util.missingFieldMsg(new String[]{"path"}));
 		}
 		if(!(request.get("path") instanceof String)){
-			return Util.generateError(Util.inconsistentFieldTypeMsg("path", "String"));
+			return Util.errorPacket(Util.inconsistentFieldTypeMsg("path", "String"));
 		}
 
 		String file = (String)request.get("path");
@@ -51,7 +51,7 @@ public class ModificationTimeHandler implements RequestHandler {
 		}catch(InvalidPathException e){
 			String msg = Util.invalidPathMsg(file);
 			logger.error(msg);
-			return Util.generateError(msg);
+			return Util.errorPacket(msg);
 		}
 
 

@@ -41,10 +41,10 @@ public class UpdateHandler implements RequestHandler {
 		}
 		
 		if(request.get("path") == null){
-			return Util.generateError(Util.missingFieldMsg(new String[]{"path"}));
+			return Util.errorPacket(Util.missingFieldMsg(new String[]{"path"}));
 		}
 		if(!(request.get("path") instanceof String)){
-			return Util.generateError(Util.inconsistentFieldTypeMsg("path", "String"));
+			return Util.errorPacket(Util.inconsistentFieldTypeMsg("path", "String"));
 		}
 		
 		String file = (String)request.get("path");
@@ -61,11 +61,11 @@ public class UpdateHandler implements RequestHandler {
 		}catch(InvalidPathException e){
 			String msg = Util.invalidPathMsg(file);
 			logger.error(msg);
-			return Util.generateError(msg);
+			return Util.errorPacket(msg);
 		}catch (FileNotFoundException e) {
 			String msg = Util.nonExistFileMsg(file);
 			logger.error(msg);
-			return Util.generateError(msg);
+			return Util.errorPacket(msg);
 		}
 		
 		for(MonitoringClientInfo clientInfo: this.monitoringInfo.get(filePath)){
