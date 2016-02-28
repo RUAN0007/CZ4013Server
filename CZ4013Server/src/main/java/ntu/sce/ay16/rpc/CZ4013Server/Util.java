@@ -8,6 +8,7 @@ import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.DatatypeConverter;
@@ -34,7 +35,7 @@ public class Util {
 		return "Field " + field + " shall be a type of " + type + ".";
 	}
 	
-	public static String missingFieldMsg(String[] fields){
+	public static String missingFieldMsg(List<String> fields){
 		StringBuffer sb = new StringBuffer("Missing field ");
 		for(String f:fields){
 			sb.append(f + ",");

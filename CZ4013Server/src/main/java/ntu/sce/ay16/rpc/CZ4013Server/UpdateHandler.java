@@ -7,6 +7,8 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -40,8 +42,12 @@ public class UpdateHandler implements RequestHandler {
 			return nextReply;
 		}
 		
+		List<String> missingFields = new LinkedList<String>();
 		if(request.get("path") == null){
-			return Util.errorPacket(Util.missingFieldMsg(new String[]{"path"}));
+			 missingFields.add("path");
+		}
+		if(missingFields.size() > 0){
+			return Util.errorPacket(Util.missingFieldMsg(missingFields));
 		}
 		if(!(request.get("path") instanceof String)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("path", "String"));

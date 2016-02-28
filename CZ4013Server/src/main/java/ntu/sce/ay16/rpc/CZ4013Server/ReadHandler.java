@@ -7,6 +7,8 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -19,10 +21,18 @@ public class ReadHandler implements RequestHandler {
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
 
-		//Check for code field
+		List<String> missingFields = new LinkedList<String>();
 		if(request.get("code") == null){
-			return Util.errorPacket(Util.missingFieldMsg(new String[]{"code"}));
+			missingFields.add("code");
 		}
+		if(request.get("path") == null){
+			missingFields.add("path");
+		}
+		if(missingFields.size() > 0){
+			return Util.errorPacket(Util.missingFieldMsg(missingFields));
+		}
+		
+		
 		if(!(request.get("code") instanceof Integer)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("code", "integer"));
 		}
@@ -35,9 +45,7 @@ public class ReadHandler implements RequestHandler {
 		}
 
 		//Check for path field
-		if(request.get("path") == null){
-			return Util.errorPacket(Util.missingFieldMsg(new String[]{"path"}));
-		}
+
 		if(!(request.get("path") instanceof String)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("path", "String"));
 		}

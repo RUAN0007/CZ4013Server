@@ -3,6 +3,8 @@ package ntu.sce.ay16.rpc.CZ4013Server;
 import java.io.File;
 import java.net.InetAddress;
 import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,10 +16,22 @@ public class RenameHandler implements RequestHandler {
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
 
-		//Check for code field
+		List<String> missingFields = new LinkedList<String>();
 		if(request.get("code") == null){
-			return Util.errorPacket(Util.missingFieldMsg(new String[]{"code"}));
+			missingFields.add("code");
 		}
+		if(request.get("old") == null){
+			missingFields.add("old");
+		}
+		if(request.get("new") == null){
+			missingFields.add("new");
+		}
+		if(missingFields.size() > 0){
+			return Util.errorPacket(Util.missingFieldMsg(missingFields));
+		}
+		
+		
+		
 		if(!(request.get("code") instanceof Integer)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("code", "integer"));
 		}
@@ -30,17 +44,13 @@ public class RenameHandler implements RequestHandler {
 		}
 
 		//Check for old field
-		if(request.get("old") == null){
-			return Util.errorPacket(Util.missingFieldMsg(new String[]{"old"}));
-		}
+		
 		if(!(request.get("old") instanceof String)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("old", "String"));
 		}
 
 		//Check for new field
-		if(request.get("new") == null){
-			return Util.errorPacket(Util.missingFieldMsg(new String[]{"new"}));
-		}
+
 		if(!(request.get("new") instanceof String)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("new", "String"));
 		}

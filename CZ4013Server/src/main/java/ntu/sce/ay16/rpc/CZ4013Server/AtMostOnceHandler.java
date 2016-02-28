@@ -2,6 +2,8 @@ package ntu.sce.ay16.rpc.CZ4013Server;
 
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,10 +25,18 @@ public class AtMostOnceHandler implements RequestHandler {
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
 		logger.entry();
-				
+		
+		List<String> missingFields = new LinkedList<String>();
+		
 		if(request.get("time") == null){
-			return Util.errorPacket(Util.missingFieldMsg(new String[]{"time"}));
+			
+			missingFields.add("time");
 		}
+		
+		if(missingFields.size() > 0){
+			return Util.errorPacket(Util.missingFieldMsg(missingFields));
+		}
+		
 		if(!(request.get("time") instanceof Long)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("time", "long"));
 		}
