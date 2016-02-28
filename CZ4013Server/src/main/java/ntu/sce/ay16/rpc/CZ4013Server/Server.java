@@ -54,7 +54,7 @@ public class Server {
 				byte[] buffer = new byte[1024];
 				DatagramPacket requestPacket = 
 						new DatagramPacket(buffer,buffer.length);
-				logger.trace("Waiting for request at port" + this.port);
+				logger.info("Waiting for request at port " + this.port);
 				dgs.receive(requestPacket);
 				byte[] data = Arrays.copyOf(requestPacket.getData(), requestPacket.getLength());
 				InetAddress clientAddr = requestPacket.getAddress();
