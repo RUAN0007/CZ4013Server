@@ -22,7 +22,7 @@ import org.junit.Test;
 import ntu.sce.ay16.rpc.CZ4013Server.Server;
 import ntu.sce.ay16.rpc.CZ4013Server.Util;
 
-public class InsertNonExistFile {
+public class InsertNonExistFileTester {
 	private Thread serverThread = null;
 	private File file = null;
 	private String filePath = "test/insert.txt";
