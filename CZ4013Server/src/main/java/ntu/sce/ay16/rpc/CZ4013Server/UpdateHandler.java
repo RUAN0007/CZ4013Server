@@ -79,21 +79,25 @@ public class UpdateHandler implements RequestHandler {
 			return Util.errorPacket(msg);
 		}
 		
-		for(MonitoringClientInfo clientInfo: this.monitoringInfo.get(filePath)){
-			InetAddress clientAddr = clientInfo.getClientAddr();
-			int clientPort = clientInfo.getClientPort();
-			long expiration = clientInfo.getExpiration();
-			
-			if(System.currentTimeMillis() < expiration){
-				Map<String,Object> callbackMsg = new HashMap<>();
-				callbackMsg.put("status"	, Integer.valueOf(1));
-				callbackMsg.put("time", modificationTime);
-				callbackMsg.put("path", (String)request.get("path"));
-				callbackMsg.put("modifier", client.getHostAddress());
-				callbackMsg.put("content", content);
-				Util.sendPacket(clientAddr, clientPort, callbackMsg);
+		Set<MonitoringClientInfo> clientInfos = this.monitoringInfo.get(filePath);
+		if(clientInfos != null){
+			for(MonitoringClientInfo clientInfo: clientInfos){
+				InetAddress clientAddr = clientInfo.getClientAddr();
+				int clientPort = clientInfo.getClientPort();
+				long expiration = clientInfo.getExpiration();
+				
+				if(System.currentTimeMillis() < expiration){
+					Map<String,Object> callbackMsg = new HashMap<>();
+					callbackMsg.put("status"	, Integer.valueOf(1));
+					callbackMsg.put("time", modificationTime);
+					callbackMsg.put("path", (String)request.get("path"));
+					callbackMsg.put("modifier", client.getHostAddress());
+					callbackMsg.put("content", content);
+					Util.sendPacket(clientAddr, clientPort, callbackMsg);
+				}
 			}
 		}
+		
 		
 		
 		logger.exit();
