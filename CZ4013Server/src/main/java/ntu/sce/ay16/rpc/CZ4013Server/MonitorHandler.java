@@ -98,6 +98,7 @@ public class MonitorHandler implements RequestHandler {
 		}
 		monitoringClients.add(clientInfo);
 		
+		logger.info("Add " + monitoredPath + " to File " + file + " monitoringList");
 		this.monitoringInfo.put(monitoredPath, monitoringClients);
 		
 		Map<String,Object> reply = new HashMap<>();
