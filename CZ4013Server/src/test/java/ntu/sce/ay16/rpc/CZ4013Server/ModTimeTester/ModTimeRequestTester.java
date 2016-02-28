@@ -90,7 +90,6 @@ public class ModTimeRequestTester {
 
 	@After
 	public void tearDown(){
-		Paths.get("test/read.txt").toFile().delete();
 		this.serverThread.interrupt();
 		this.file.delete();
 	}
