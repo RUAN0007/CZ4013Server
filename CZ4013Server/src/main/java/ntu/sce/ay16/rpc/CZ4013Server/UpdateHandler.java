@@ -47,26 +47,22 @@ public class UpdateHandler implements RequestHandler {
 			return Util.generateError(Util.inconsistentFieldTypeMsg("path", "String"));
 		}
 		
-		
-		Path filePath = null;
-		try{
-			filePath = Paths.get((String)request.get("path"));
-		}catch(InvalidPathException e){
-			String msg = Util.invalidPathMsg((String)request.get("path"));
-			logger.error(msg);
-			return Util.generateError(msg);
-		}
-		
 		String file = (String)request.get("path");
 		String content = null;
 		long modificationTime;
-		try {
+		Path filePath = null;
+		try{
+			 filePath = Paths.get(file);
 			File reqFile = filePath.toFile();
 			Scanner fileScanner = new Scanner(reqFile);
 			content = fileScanner.useDelimiter("\\Z").next();
 			modificationTime = reqFile.lastModified();
 			fileScanner.close();
-		} catch (FileNotFoundException e) {
+		}catch(InvalidPathException e){
+			String msg = Util.invalidPathMsg(file);
+			logger.error(msg);
+			return Util.generateError(msg);
+		}catch (FileNotFoundException e) {
 			String msg = Util.nonExistFileMsg(file);
 			logger.error(msg);
 			return Util.generateError(msg);
