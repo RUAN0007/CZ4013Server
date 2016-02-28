@@ -1,4 +1,4 @@
-package ntu.sce.ay16.rpc.CZ4013Server.readTester;
+package ntu.sce.ay16.rpc.CZ4013Server.ReadTester;
 
 import static org.junit.Assert.*;
 
