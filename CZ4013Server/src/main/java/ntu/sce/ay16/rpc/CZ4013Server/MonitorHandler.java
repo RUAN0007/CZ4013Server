@@ -27,7 +27,7 @@ public class MonitorHandler implements RequestHandler {
 
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
-
+		logger.entry();
 		//Check for code field
 		List<String> missingFields = new LinkedList<String>();
 
@@ -104,7 +104,7 @@ public class MonitorHandler implements RequestHandler {
 		reply.put("status"	, Integer.valueOf(1));
 		reply.put("end", Long.valueOf(expiration));
 		reply.put("message", "Monitoring File " + file + " Started.");
-		
+		logger.exit();
 		return reply;
 		
 	}

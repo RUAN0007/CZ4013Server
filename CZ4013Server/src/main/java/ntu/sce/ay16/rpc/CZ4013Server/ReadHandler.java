@@ -20,7 +20,7 @@ public class ReadHandler implements RequestHandler {
 
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
-
+		logger.entry();
 		List<String> missingFields = new LinkedList<String>();
 		if(request.get("code") == null){
 			missingFields.add("code");
@@ -78,7 +78,7 @@ public class ReadHandler implements RequestHandler {
 		reply.put("modification", modificationTime);
 		reply.put("path", file);
 		reply.put("content", content);		
-		
+		logger.exit();
 		return reply;
 	}
 

@@ -18,6 +18,7 @@ public class ModificationTimeHandler implements RequestHandler {
 
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
+		logger.entry();
 		List<String> missingFields = new LinkedList<String>();
 
 		//Check for code field
@@ -55,7 +56,11 @@ public class ModificationTimeHandler implements RequestHandler {
 		try{
 			Path filePath = Paths.get(file);
 			File reqFile = filePath.toFile();
-
+			if(!reqFile.exists()){
+				String msg = Util.nonExistFileMsg(file);
+				logger.error(msg);
+				return Util.errorPacket(msg);
+			}
 			modificationTime = reqFile.lastModified();
 		}catch(InvalidPathException e){
 			String msg = Util.invalidPathMsg(file);
@@ -68,6 +73,7 @@ public class ModificationTimeHandler implements RequestHandler {
 		reply.put("status", Integer.valueOf(1));
 		reply.put("path", file);
 		reply.put("modification", modificationTime);
+		logger.exit();
 		return reply;
 	}
 

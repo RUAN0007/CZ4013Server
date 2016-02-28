@@ -22,7 +22,7 @@ public class AppendHandler implements RequestHandler {
 
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
-
+		logger.entry();
 		List<String> missingFields = new LinkedList<String>();
 		if(request.get("code") == null){
 			missingFields.add("code");
@@ -36,7 +36,7 @@ public class AppendHandler implements RequestHandler {
 		if(missingFields.size() > 0){
 			return Util.errorPacket(Util.missingFieldMsg(missingFields));
 		}		
-		
+
 		if(!(request.get("code") instanceof Integer)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("code", "integer"));
 		}
@@ -47,34 +47,34 @@ public class AppendHandler implements RequestHandler {
 			logger.fatal(msg);
 			return Util.errorPacket(msg);
 		}
-		
+
 		if(!(request.get("path") instanceof String)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("path", "String"));
 		}
 
 		String file = (String)request.get("path");
-		
+
 		if(!(request.get("append") instanceof String)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("append", "String"));
 		}
 		String appendedContents = (String)request.get("append");
-		
-String content = null;
-		
+
+		String content = null;
+
 		try{
 			Path filePath = Paths.get(file);
 			File reqFile = filePath.toFile();
 			Scanner fileScanner = new Scanner(reqFile);
 			content = fileScanner.useDelimiter("\\Z").next();
 			fileScanner.close();
-			
+
 			StringBuffer buffer = new StringBuffer(content);
 			buffer.append(appendedContents);
-			
+
 			BufferedWriter bw = new BufferedWriter(new FileWriter(reqFile));
 			bw.write(buffer.toString());
 			bw.close();
-			
+
 		}catch(InvalidPathException e){
 			String msg = Util.invalidPathMsg(file);
 			logger.error(msg);
@@ -88,15 +88,15 @@ String content = null;
 			logger.error(msg);
 			return Util.errorPacket(msg);
 		}
-		
+
 
 		Map<String,Object> reply = 
 				Util.successPacket("File " + file + " Appending Succeeded.");
-		
-		
-		
+
+
+		logger.exit();
 		return reply;
-		
+
 	}
 
 }

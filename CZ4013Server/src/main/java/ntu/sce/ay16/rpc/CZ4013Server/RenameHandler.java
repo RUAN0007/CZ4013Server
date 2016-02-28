@@ -15,7 +15,7 @@ public class RenameHandler implements RequestHandler {
 
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
-
+		logger.entry();
 		List<String> missingFields = new LinkedList<String>();
 		if(request.get("code") == null){
 			missingFields.add("code");
@@ -76,12 +76,13 @@ public class RenameHandler implements RequestHandler {
 		
 		if(oldFile.renameTo(newFile)){
 			String msg = "Renaming file " + oldFileName + " to " + newFileName + " succeeded.";
+			logger.exit();
 			return Util.successPacket(msg);
 		}else{
 			String msg = "Renaming file " + oldFileName + " to " + newFileName + " failed.";
 			return Util.errorPacket(msg);
 		}
-
+		
 	}
 
 }
