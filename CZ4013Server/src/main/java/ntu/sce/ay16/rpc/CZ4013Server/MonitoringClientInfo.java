@@ -21,6 +21,12 @@ public class MonitoringClientInfo{
 	public long getExpiration() {
 		return expiration;
 	}
+	@Override
+	public String toString() {
+		return "MonitoringClientInfo [clientAddr=" + clientAddr + ", clientPort=" + clientPort + ", expiration="
+				+ expiration + "]";
+	}
+	
 	
 	
 }
