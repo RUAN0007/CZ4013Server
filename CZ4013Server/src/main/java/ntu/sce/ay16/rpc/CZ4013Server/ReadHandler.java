@@ -47,10 +47,9 @@ public class ReadHandler implements RequestHandler {
 		
 		String content = null;
 		long modificationTime = 0L;
-		Path filePath = null;
 		
 		try{
-			 filePath = Paths.get(file);
+			Path filePath = Paths.get(file);
 			File reqFile = filePath.toFile();
 			Scanner fileScanner = new Scanner(reqFile);
 			content = fileScanner.useDelimiter("\\Z").next();
@@ -69,7 +68,7 @@ public class ReadHandler implements RequestHandler {
 		Map<String,Object> reply = new HashMap<>();
 		reply.put("status"	, Integer.valueOf(1));
 		reply.put("modification", modificationTime);
-		reply.put("path", (String)request.get("path"));
+		reply.put("path", file);
 		reply.put("content", content);		
 		
 		return reply;
