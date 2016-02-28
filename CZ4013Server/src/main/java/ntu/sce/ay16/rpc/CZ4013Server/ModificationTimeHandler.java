@@ -22,7 +22,7 @@ public class ModificationTimeHandler implements RequestHandler {
 			return Util.generateError(Util.missingFieldMsg(new String[]{"code"}));
 		}
 		if(!(request.get("code") instanceof Integer)){
-			return Util.generateError(Util.inconsistentFieldTypeMsg("time", "integer"));
+			return Util.generateError(Util.inconsistentFieldTypeMsg("code", "integer"));
 		}
 		int code = (Integer)request.get("code");
 
