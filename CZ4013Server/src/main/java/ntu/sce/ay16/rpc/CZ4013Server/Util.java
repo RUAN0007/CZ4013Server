@@ -18,6 +18,18 @@ import org.apache.logging.log4j.Logger;
 public class Util {
 	static Logger logger = LogManager.getLogger(Util.class.getName());    
 	
+	public static Map<String,Object> successPacket(String msg){
+		Map<String,Object> successPacket = new HashMap<>();
+		successPacket.put("status", Integer.valueOf(1));
+		successPacket.put("message", msg);
+		return successPacket;
+	}
+	
+	public static String inconsistReqCodeMsg(String req,int code){
+		return "Internal Server error: the code for " 
+				 + req + " request shall NOT be " + code + "."; 
+	}
+	
 	public static String inconsistentFieldTypeMsg(String field,String type){
 		return "Field " + field + " shall be a type of " + type + ".";
 	}
@@ -195,7 +207,7 @@ public class Util {
 		return "Invalid Path " + path;
 	}
 
-	public static String nonExistFileMsg(Path filePath) {
-		return "File on path " + filePath.toString() + " does not exist";
+	public static String nonExistFileMsg(String file) {
+		return "File on path " + file + " does not exist";
 	}
 }
