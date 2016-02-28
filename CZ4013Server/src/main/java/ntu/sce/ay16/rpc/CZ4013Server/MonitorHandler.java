@@ -86,7 +86,7 @@ public class MonitorHandler implements RequestHandler {
 		if(!(request.get("duration") instanceof Long)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("duration", "long"));
 		}
-		long duration = (Long)request.get("port");
+		long duration = (Long)request.get("duration");
 		
 		
 		long expiration = System.currentTimeMillis() + duration;
