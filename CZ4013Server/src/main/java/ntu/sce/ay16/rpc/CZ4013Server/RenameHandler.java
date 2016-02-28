@@ -1,12 +1,9 @@
 package ntu.sce.ay16.rpc.CZ4013Server;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.InetAddress;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.Map;
-import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,14 +64,13 @@ public class RenameHandler implements RequestHandler {
 			return Util.errorPacket(msg);
 		}
 		
-//		if(!oldFile.renameTo(newFile)){
-//			String 
-//		}
-//		oldFile.renameTo(nul)
-//		content = fileScanner.useDelimiter("\\Z").next();
-//		modificationTime = reqFile.lastModified();
-//		fileScanner.close();
-		return null;
+		if(oldFile.renameTo(newFile)){
+			String msg = "Renaming file " + oldFileName + " to " + newFileName + " succeeded.";
+			return Util.successPacket(msg);
+		}else{
+			String msg = "Renaming file " + oldFileName + " to " + newFileName + " failed.";
+			return Util.errorPacket(msg);
+		}
 
 	}
 
