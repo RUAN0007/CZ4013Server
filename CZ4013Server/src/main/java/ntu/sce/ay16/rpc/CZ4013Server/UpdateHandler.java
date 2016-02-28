@@ -86,7 +86,7 @@ public class UpdateHandler implements RequestHandler {
 				callbackMsg.put("path", (String)request.get("path"));
 				callbackMsg.put("modifier", client.getHostAddress());
 				callbackMsg.put("content", content);
-				Util.sendMsg(clientAddr, clientPort, callbackMsg);
+				Util.sendPacket(clientAddr, clientPort, callbackMsg);
 			}
 		}
 		

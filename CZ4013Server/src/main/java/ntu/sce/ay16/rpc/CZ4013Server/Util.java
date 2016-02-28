@@ -43,7 +43,7 @@ public class Util {
 		return sb.toString();
 	}
 	
-	public static boolean sendMsg(InetAddress address,int port, Map<String,Object>response){
+	public static boolean sendPacket(InetAddress address,int port, Map<String,Object>response){
 		try(DatagramSocket dgs = new DatagramSocket()){
 			byte[] data = Util.marshal(response);
 			DatagramPacket request = 
