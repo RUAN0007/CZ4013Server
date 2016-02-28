@@ -45,7 +45,7 @@ public class InsertHandler implements RequestHandler {
 		int code = (Integer)request.get("code");
 
 		if(code != 2){
-			String msg = Util.inconsistentReqCodeMsg("Read", 2);
+			String msg = Util.inconsistentReqCodeMsg("Insert", 2);
 			logger.fatal(msg);
 			return Util.errorPacket(msg);
 		}
