@@ -54,7 +54,7 @@ public class MonitorHandler implements RequestHandler {
 		int code = (Integer)request.get("code");
 
 		if(code != 3){
-			String msg = Util.inconsistReqCodeMsg("Monitor", 3);
+			String msg = Util.inconsistentReqCodeMsg("Monitor", 3);
 			logger.fatal(msg);
 			return Util.errorPacket(msg);
 		}

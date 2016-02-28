@@ -39,7 +39,7 @@ public class ReadHandler implements RequestHandler {
 		int code = (Integer)request.get("code");
 
 		if(code != 1){
-			String msg = Util.inconsistReqCodeMsg("Read", 1);
+			String msg = Util.inconsistentReqCodeMsg("Read", 1);
 			logger.fatal(msg);
 			return Util.errorPacket(msg);
 		}

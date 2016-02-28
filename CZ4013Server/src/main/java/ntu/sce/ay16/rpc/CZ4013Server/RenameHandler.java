@@ -38,7 +38,7 @@ public class RenameHandler implements RequestHandler {
 		int code = (Integer)request.get("code");
 
 		if(code != 1){
-			String msg = Util.inconsistReqCodeMsg("Rename", 4);
+			String msg = Util.inconsistentReqCodeMsg("Rename", 4);
 			logger.fatal(msg);
 			return Util.errorPacket(msg);
 		}

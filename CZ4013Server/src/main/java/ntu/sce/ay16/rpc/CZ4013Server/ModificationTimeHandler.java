@@ -38,7 +38,7 @@ public class ModificationTimeHandler implements RequestHandler {
 		int code = (Integer)request.get("code");
 
 		if(code != 0){
-			String msg = Util.inconsistReqCodeMsg("ModificationTime", code);
+			String msg = Util.inconsistentReqCodeMsg("ModificationTime", code);
 			logger.fatal(msg);
 			return Util.errorPacket(msg);
 		}

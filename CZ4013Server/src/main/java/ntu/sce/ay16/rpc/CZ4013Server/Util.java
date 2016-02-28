@@ -26,7 +26,7 @@ public class Util {
 		return successPacket;
 	}
 	
-	public static String inconsistReqCodeMsg(String req,int code){
+	public static String inconsistentReqCodeMsg(String req,int code){
 		return "Internal Server error: the code for " 
 				 + req + " request shall NOT be " + code + "."; 
 	}
