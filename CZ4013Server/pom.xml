@@ -48,6 +48,35 @@
 						<target>${java.version}</target>
 					</configuration>
 				</plugin>
+
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<executions>
+						<execution>
+							<goals>
+								<goal>attached</goal>
+							</goals>
+							<phase>package</phase>
+							<configuration>
+								<descriptorRefs>
+									<descriptorRef>log4j-api-2.5.jar</descriptorRef>
+									<descriptorRef>log4j-core-2.5.jar</descriptorRef>
+
+								</descriptorRefs>
+								<archive>
+									<manifest>
+										<mainClass>ntu.sce.ay16.rpc.CZ4013Server.App</mainClass>
+									</manifest>
+								</archive>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+
+
 			</plugins>
 		</pluginManagement>
 	</build>
