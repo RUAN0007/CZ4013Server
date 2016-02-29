@@ -25,9 +25,18 @@ public class App
 	static Logger logger = LogManager.getLogger(App.class.getName());    
 
 	public static void main( String[] args )
-	{
+	{			
 		logger.entry();
-		new Server().start();
+		if(args.length == 0){
+			new Server().start();
+		}else if(args.length == 1){
+			int port = Integer.parseInt(args[0]);
+			new Server(port).start();
+		}else{
+			int  semantics = Integer.parseInt(args[1]);
+			int port = Integer.parseInt(args[0]);
+			new Server(port,semantics).start();
+		}
 		logger.exit();
 	}
 }
