@@ -29,6 +29,8 @@ public class Server {
 	public Server(int port, int semantics){
 		this.port = port;
 		this.semantics = semantics;
+		String semantic = (this.semantics == AT_MOST_ONCE?"At_Most_Once":"At_Least_Once");
+		logger.info("Server Semantics: " + semantic);
 		configureRequestHandler();
 	}
 
