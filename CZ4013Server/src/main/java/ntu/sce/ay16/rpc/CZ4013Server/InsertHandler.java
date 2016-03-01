@@ -61,7 +61,7 @@ public class InsertHandler implements RequestHandler {
 		
 		
 		if(!(request.get("offset") instanceof Integer)){
-			return Util.errorPacket(Util.inconsistentFieldTypeMsg("code", "offset"));
+			return Util.errorPacket(Util.inconsistentFieldTypeMsg("offset", "Integer"));
 		}
 		int offset = (Integer)request.get("offset");
 		
