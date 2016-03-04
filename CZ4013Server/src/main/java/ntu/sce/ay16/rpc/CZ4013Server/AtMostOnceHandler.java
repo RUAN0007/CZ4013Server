@@ -47,7 +47,10 @@ public class AtMostOnceHandler implements RequestHandler {
 		String key = client.getHostName() + "." + requestTime;
 		Map<String,Object> preReply = this.responseCache.get(key);
 		
-		if(preReply != null) return preReply;
+		if(preReply != null) {
+			logger.info("Find the cached reply " + preReply + " for " + key);
+			return preReply;
+		}
 		
 		Map<String,Object> nextResponse = this.nextRqHdler.handleRequest(request, client);
 		
