@@ -18,6 +18,8 @@ import org.apache.logging.log4j.Logger;
 
 public class Util {
 	static Logger logger = LogManager.getLogger(Util.class.getName());    
+	public static int lostReplyCount = 0;
+	public static int replyDelaySec = 0;
 	
 	public static Map<String,Object> successPacket(String msg){
 		Map<String,Object> successPacket = new HashMap<>();
@@ -48,9 +50,16 @@ public class Util {
 			byte[] data = Util.marshal(response);
 			DatagramPacket request = 
 					new DatagramPacket(data, data.length, address, port);
-			dgs.send(request);
-			logger.info("Send to " + address.toString() + " at port " + port + " contents: " + response);
-
+			
+			if(lostReplyCount > 0){
+				lostReplyCount--; 
+				logger.info("(Lost)Reply to " + address.toString() + " at port " + port + " contents: " + response);
+			}else{
+				Thread.sleep(replyDelaySec * 1000); 
+				dgs.send(request);
+				logger.info("Reply to " + address.toString() + " at port " + port + " contents: " + response);	
+			}
+			
 		} catch (SocketException e) {
 			logger.error(e.getMessage());
 			return false;
