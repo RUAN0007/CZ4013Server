@@ -75,7 +75,7 @@ public class Server {
 					continue;
 				}
 
-				logger.info("Received Request " + request.toString());
+				logger.info("Received Request " + request.toString() + "From " + clientAddr.getHostAddress() + " At Port " + clientPort);
 				
 				//Switch the request code
 				List<String> missingFields = new LinkedList<String>();
