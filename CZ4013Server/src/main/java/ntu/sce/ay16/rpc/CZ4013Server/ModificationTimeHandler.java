@@ -20,7 +20,8 @@ public class ModificationTimeHandler implements RequestHandler {
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
 		logger.entry();
 		List<String> missingFields = new LinkedList<String>();
-
+//////////////////////////////////////////////////////////////
+//Retrieve and validate parameters
 		//Check for code field
 		if(request.get("code") == null){
 			missingFields.add("code");
@@ -52,7 +53,10 @@ public class ModificationTimeHandler implements RequestHandler {
 
 		String file = (String)request.get("path");
 		Long modificationTime = 0L;
+//////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////
+//Get last modification time
 		try{
 			Path filePath = Paths.get(file);
 			File reqFile = filePath.toFile();
@@ -67,8 +71,10 @@ public class ModificationTimeHandler implements RequestHandler {
 			logger.error(msg);
 			return Util.errorPacket(msg);
 		}
+//////////////////////////////////////////////////////////////
 
-
+//////////////////////////////////////////////////////////////
+//Construct the reply message
 		Map<String,Object> reply = new HashMap<String,Object>();
 		reply.put("status", Integer.valueOf(1));
 		reply.put("path", file);

@@ -20,7 +20,10 @@ public class Util {
 	static Logger logger = LogManager.getLogger(Util.class.getName());    
 	public static int lostReplyCount = 0;
 	public static int replyDelaySec = 0;
-	
+
+	/**
+	 * Construct message response for successful operation
+	 */
 	public static Map<String,Object> successPacket(String msg){
 		Map<String,Object> successPacket = new HashMap<>();
 		successPacket.put("status", Integer.valueOf(1));
@@ -28,6 +31,8 @@ public class Util {
 		return successPacket;
 	}
 	
+//////////////////////////////////////////////////////////////
+//Construct reply messages for failed operation
 	public static String inconsistentReqCodeMsg(String req,int code){
 		return "Internal Server error: the code for " 
 				 + req + " request shall NOT be " + code + "."; 
@@ -45,6 +50,25 @@ public class Util {
 		return sb.toString();
 	}
 	
+	public static String failUnMarshalMsg(byte[] data){
+		return "Fail to Unmarshal 0x" + DatatypeConverter.printHexBinary(data);
+	}
+	
+
+	public static String invalidPathMsg(String path) {
+		// TODO Auto-generated method stub
+		return "Invalid Path " + path;
+	}
+
+	public static String nonExistFileMsg(String file) {
+		return "File on path " + file + " does not exist";
+	}
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+/**
+ * Send the reply to the ip and port address
+ */
 	public static boolean sendPacket(InetAddress address,int port, Map<String,Object>response){
 		try(DatagramSocket dgs = new DatagramSocket()){
 			byte[] data = Util.marshal(response);
@@ -70,10 +94,12 @@ public class Util {
 		}
 		return true;
 	}
-	public static String failUnMarshalMsg(byte[] data){
-		return "Fail to Unmarshal 0x" + DatatypeConverter.printHexBinary(data);
-	}
 	
+	/**
+	 * Construct the reply for failed operations with messages
+	 * @param msg
+	 * @return
+	 */
 	public static Map<String,Object> errorPacket(String msg){
 		Map<String,Object> errorMsg = new HashMap<>();
 		errorMsg.put("status", Integer.valueOf(0));
@@ -81,6 +107,12 @@ public class Util {
 		return errorMsg;
 	}
 	
+	/**
+	 * Perform the marshalling
+	 * @param parameters the reply to be sent
+	 * @return
+	 * @throws Exception
+	 */
 	public static byte[] marshal (Map<String, Object> parameters) throws Exception{
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
 
@@ -121,6 +153,12 @@ public class Util {
 		return outputStream.toByteArray();	
 	}
 
+	/**
+	 * Unmarmal the byte array to key-value mapping pairs
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
 	public static Map<String,Object> unmarshal(byte[] data) throws Exception{
 		int q = 0;
 		for(byte b:data){
@@ -212,12 +250,4 @@ public class Util {
 		return result;
 	}
 
-	public static String invalidPathMsg(String path) {
-		// TODO Auto-generated method stub
-		return "Invalid Path " + path;
-	}
-
-	public static String nonExistFileMsg(String file) {
-		return "File on path " + file + " does not exist";
-	}
 }

@@ -21,6 +21,8 @@ public class ReadHandler implements RequestHandler {
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
 		logger.entry();
+//////////////////////////////////////////////////////////////
+//Retrieve and validate parameters
 		List<String> missingFields = new LinkedList<String>();
 		if(request.get("code") == null){
 			missingFields.add("code");
@@ -55,7 +57,10 @@ public class ReadHandler implements RequestHandler {
 		
 		String content = null;
 		long modificationTime = 0L;
-		
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+//Perform the reading
 		try{
 			Path filePath = Paths.get(file);
 			File reqFile = filePath.toFile();
@@ -72,7 +77,10 @@ public class ReadHandler implements RequestHandler {
 			logger.error(msg);
 			return Util.errorPacket(msg);
 		}
-		
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+//Construct the reply
 		Map<String,Object> reply = new HashMap<>();
 		reply.put("status"	, Integer.valueOf(1));
 		reply.put("modification", modificationTime);

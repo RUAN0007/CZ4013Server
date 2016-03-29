@@ -39,14 +39,18 @@ public class UpdateHandler implements RequestHandler {
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
 		logger.entry();
-		
+//////////////////////////////////////////////////////////////
+//Pass the request to next request handlers in the chain		
 		Map<String,Object> nextReply = this.nextRqHdler.handleRequest(request, client);
 		
 		int code = (Integer)nextReply.get("status");
 		if(code == 0){
+			//If operation fails (Code=0), just return response. No callback message. 
 			return nextReply;
 		}
-		
+
+//////////////////////////////////////////////////////////////
+		//Retrieve and validate parameters
 		List<String> missingFields = new LinkedList<String>();
 		if(request.get("path") == null){
 			 missingFields.add("path");
@@ -57,7 +61,10 @@ public class UpdateHandler implements RequestHandler {
 		if(!(request.get("path") instanceof String)){
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("path", "String"));
 		}
-		
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+//Retrieve the file's last modification time
 		String file = (String)request.get("path");
 		String content = null;
 		long modificationTime;
@@ -78,7 +85,12 @@ public class UpdateHandler implements RequestHandler {
 			logger.error(msg);
 			return Util.errorPacket(msg);
 		}
-		
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+//Retrieve the records of MonitoringClientInfo for that file
+//For each record, if the current time has not exceeded its monitoring expiration time 
+		//Construct the callback message with newly updated file contents, modifier and other info
 		Set<MonitoringClientInfo> clientInfos = this.monitoringInfo.get(filePath);
 		if(clientInfos != null){
 			for(MonitoringClientInfo clientInfo: clientInfos){
@@ -97,7 +109,8 @@ public class UpdateHandler implements RequestHandler {
 				}
 			}
 		}
-		
+//////////////////////////////////////////////////////////////
+	
 		
 		
 		logger.exit();

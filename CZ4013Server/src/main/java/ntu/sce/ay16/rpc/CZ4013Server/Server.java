@@ -53,16 +53,24 @@ public class Server {
 		try(DatagramSocket dgs = new DatagramSocket(this.port)){
 
 			while(true){
+//////////////////////////////////////////////////////////////
+				//Keep waiting on the designated port
 				byte[] buffer = new byte[1024];
 				DatagramPacket requestPacket = 
 						new DatagramPacket(buffer,buffer.length);
 				logger.info("Waiting for request at port " + this.port);
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////				
+				//Retrieve the request message
 				dgs.receive(requestPacket);
 				byte[] data = Arrays.copyOf(requestPacket.getData(), requestPacket.getLength());
 				InetAddress clientAddr = requestPacket.getAddress();
 				int  clientPort = requestPacket.getPort();
 				Map<String,Object> request = null;
-
+//////////////////////////////////////////////////////////////
+				
+//////////////////////////////////////////////////////////////
 				//Try to unmarshal the received packet
 				try{
 					request = Util.unmarshal(data);
@@ -76,8 +84,10 @@ public class Server {
 				}
 
 				logger.info("Received Request " + request.toString() + "From " + clientAddr.getHostAddress() + " At Port " + clientPort);
-				
-				//Switch the request code
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+				//Retrieve and validate requests
 				List<String> missingFields = new LinkedList<String>();
 				if(request.get("code") == null){
 					missingFields.add("code");
@@ -96,7 +106,10 @@ public class Server {
 					continue;
 				}
 				int code = (Integer)request.get("code");
+//////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////
+				//Route the request to specific request handlers based on the request code
 				Map<String,Object> reply = null;
 				if(code == 0){
 					reply = this.modTimeHandler.handleRequest(request, clientAddr);
@@ -117,6 +130,8 @@ public class Server {
 				}
 				
 				Util.sendPacket(clientAddr, clientPort, reply);
+//////////////////////////////////////////////////////////////
+
 			}//End of while(true)
 		} catch (SocketException e1) {
 			logger.fatal(e1.getMessage());
@@ -129,7 +144,10 @@ public class Server {
 	}
 
 
-	
+	/**
+	 * Construct the request handlers and chain them into a list
+	 * based on the configured semantics. 
+	 */
 	private  void configureRequestHandler(){
 		logger.entry();
 		Map<String,Map<String,Object>> cachedReply = new HashMap<>();

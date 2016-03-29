@@ -22,6 +22,8 @@ public class AppendHandler implements RequestHandler {
 
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
+/////////////////////////////////////////////////////
+		//Validate and retrieve parameters
 		logger.entry();
 		List<String> missingFields = new LinkedList<String>();
 		if(request.get("code") == null){
@@ -61,6 +63,11 @@ public class AppendHandler implements RequestHandler {
 
 		String content = null;
 
+//////////////////////////////////////////////////////////////
+		
+//////////////////////////////////////////////////////////////		
+		//Perform the appending
+
 		try{
 			Path filePath = Paths.get(file);
 			File reqFile = filePath.toFile();
@@ -89,7 +96,9 @@ public class AppendHandler implements RequestHandler {
 			return Util.errorPacket(msg);
 		}
 
-
+/////////////////////////////////////////
+		//Construct the reply
+		
 		Map<String,Object> reply = 
 				Util.successPacket("File " + file + " Appending Succeeded.");
 

@@ -15,6 +15,10 @@ import org.apache.logging.log4j.Logger;
 
 public class MonitorHandler implements RequestHandler {
 	static Logger logger = LogManager.getLogger(MonitorHandler.class.getName());    
+	/**
+	 * Key: The file path
+	 * Value: a set of MonitoringClientInfo that monitors this file
+	 */
 	private Map<Path, Set<MonitoringClientInfo>> monitoringInfo = 
 			new HashMap<>();
 
@@ -28,6 +32,9 @@ public class MonitorHandler implements RequestHandler {
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
 		logger.entry();
+//////////////////////////////////////////////////////////////
+//Retrieve and validate parameters
+		
 		//Check for code field
 		List<String> missingFields = new LinkedList<String>();
 
@@ -87,8 +94,10 @@ public class MonitorHandler implements RequestHandler {
 			return Util.errorPacket(Util.inconsistentFieldTypeMsg("duration", "long"));
 		}
 		long duration = (Long)request.get("duration");
+//////////////////////////////////////////////////////////////
 		
-		
+//////////////////////////////////////////////////////////////
+//Add a 	MonitoringClientInfo record to the monitored file
 		long expiration = System.currentTimeMillis() + duration;
 		MonitoringClientInfo clientInfo = new MonitoringClientInfo(client, port, expiration);
 		
@@ -100,7 +109,10 @@ public class MonitorHandler implements RequestHandler {
 		
 		logger.info("Add " + monitoredPath + " to File " + file + " monitoringList");
 		this.monitoringInfo.put(monitoredPath, monitoringClients);
-		
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+//Construct the reply
 		Map<String,Object> reply = new HashMap<>();
 		reply.put("status"	, Integer.valueOf(1));
 		reply.put("end", Long.valueOf(expiration));

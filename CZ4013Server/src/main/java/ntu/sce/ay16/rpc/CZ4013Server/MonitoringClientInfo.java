@@ -1,8 +1,14 @@
 package ntu.sce.ay16.rpc.CZ4013Server;
 
 import java.net.InetAddress;
-
+/**
+ * An instance of MonitoringClientInfo is a record for the clients that monitoring a certain file. 
+ * The record consists of a client's IP, port number and the time when monitoring expires.
+ * @author ruanpingcheng
+ *
+ */
 public class MonitoringClientInfo{
+	
 	private InetAddress clientAddr;
 	private int clientPort;
 	private long expiration;

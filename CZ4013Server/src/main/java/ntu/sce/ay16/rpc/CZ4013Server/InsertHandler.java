@@ -22,6 +22,8 @@ public class InsertHandler implements RequestHandler {
 
 	@Override
 	public Map<String, Object> handleRequest(Map<String, Object> request, InetAddress client) {
+//////////////////////////////////////////////////////////////
+//Validate and retrieve parameters
 		logger.entry();
 		List<String> missingFields = new LinkedList<String>();
 		if(request.get("code") == null){
@@ -72,7 +74,10 @@ public class InsertHandler implements RequestHandler {
 		String insertedContents = (String)request.get("insertion");
 			
 		String content = null;
-		
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+//Perform the insertion
 		try{
 			Path filePath = Paths.get(file);
 			File reqFile = filePath.toFile();
@@ -108,7 +113,10 @@ public class InsertHandler implements RequestHandler {
 			return Util.errorPacket(msg);
 		}
 		
+//////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////
+//Construct the reply message
 		Map<String,Object> reply = 
 				Util.successPacket("File " + file + " Insertion Succeeded.");
 		

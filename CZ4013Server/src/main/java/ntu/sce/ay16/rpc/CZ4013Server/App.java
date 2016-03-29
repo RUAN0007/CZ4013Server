@@ -17,8 +17,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Hello world!
- *
+```
+java -jar CZ4013Server.jar 8800 1
+```
+Server will listen to port 8800 and choose AT_MOST_ONCE semantics as default
+
+```
+java -jar CZ4013Server.jar 8800 2
+```
+Server will listen to port 8800 and choose AT_LEAST_ONCE semantics as default
+
+```
+java -jar CZ4013Server.jar 8800 2 5
+```
+Server will listen to port 8800 and choose AT_LEAST_ONCE semantics as default. The first 5 replies will be lost. This feature is to simulate lost reply scenario.
+
+```
+java -jar CZ4013Server.jar 8800 2 5 10
+```
+Server will listen to port 8800 and choose AT_LEAST_ONCE semantics as default. The first 5 replies will be lost. And each reply will first delay 10 seconds before transmission. This feature is to simulate incomplete interaction scenario. *
  */
 public class App 
 {
